@@ -69,11 +69,11 @@ namespace AndWeHaveAPlan.Mimic.AspPlayground
     }
 
 
-    public class HttpRealWorker : IProtocolImplementation
+    public class HttpRealWorker : IMimicWorker
     {
-        public async Task<T> MakeRequest<T>(string address, params object[] args)
+        public async Task<T> Mock<T>(string mockMethodName, params object[] args)
         {
-            Console.WriteLine("Common worker: " + address);
+            Console.WriteLine("Common worker: " + mockMethodName);
 
             foreach (var arg in args)
             {

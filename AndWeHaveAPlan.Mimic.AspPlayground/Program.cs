@@ -15,7 +15,7 @@ namespace AndWeHaveAPlan.Mimic.AspPlayground
         {
             HttpRealWorker w = new HttpRealWorker();
 
-            var t=w.MakeRequest<Task>("").Result;
+            var t=w.Mock<Task>("").Result;
             
             CreateHostBuilder(args).Build().Run();
         }
