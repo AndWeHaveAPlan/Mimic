@@ -128,7 +128,7 @@ namespace AndWeHaveAPlan.Mimic
                 ilGenerator.Emit(OpCodes.Dup); // dup array address
                 ilGenerator.Emit(OpCodes.Ldc_I4, i); //load index
 
-                ilGenerator.Emit(OpCodes.Ldstr, methodName);
+                ilGenerator.Emit(OpCodes.Ldstr, interfaceMethodInfo.GetParameters()[i].Name);
                 ilGenerator.Emit(OpCodes.Ldtoken, methodParamsTypes[i]);
                 ilGenerator.Emit(OpCodes.Call, typeof(Type).GetMethod("GetTypeFromHandle", new
                     Type[] {typeof(RuntimeTypeHandle)}));
