@@ -15,9 +15,9 @@ namespace AndWeHaveAPlan.Mimic
         /// 
         /// </summary>
         /// <typeparam name="TInterface">Interface to mimic to</typeparam>
-        /// <typeparam name="TMimicMock">"Real" worker class</typeparam>
+        /// <typeparam name="TMimicWorker">"Real" worker class</typeparam>
         /// <returns></returns>
-        public static Type Create<TInterface, TMimicMock>() where TMimicMock : IMimicWorker
+        public static Type Create<TInterface, TMimicWorker>() where TMimicWorker : IMimicWorker
         {
             AssemblyName asmName = new AssemblyName
             {
@@ -35,7 +35,7 @@ namespace AndWeHaveAPlan.Mimic
             TypeBuilder tb =
                 moduleBuilder.DefineType($"AndWeHaveAPlan.{typeof(TInterface).Name}Mimic", TypeAttributes.Public);
 
-            var makeRequestMethodInfo = typeof(TMimicMock).GetMethod("MakeRequest");
+            var makeRequestMethodInfo = typeof(TMimicWorker).GetMethod("Mock");
 
             /*
                 class ...
@@ -46,17 +46,18 @@ namespace AndWeHaveAPlan.Mimic
              */
             var fieldBuilder = tb.DefineField(
                 "_protocolImplementation",
-                typeof(TMimicMock),
+                typeof(TMimicWorker),
                 FieldAttributes.Private
             );
 
             /*
                 public TInterfaceMimic(TWorker worker)
                 {
-                    this._protocolImplementation = worker;            
+                    this._protocolImplementation = worker;     
+                }       
             */
             var ctorBuilder = tb.DefineConstructor(MethodAttributes.Public,
-                CallingConventions.HasThis | CallingConventions.Standard, new[] {typeof(TMimicMock)});
+                CallingConventions.HasThis | CallingConventions.Standard, new[] {typeof(TMimicWorker)});
             BuildConstructor(ctorBuilder.GetILGenerator(), fieldBuilder);
 
             /*
@@ -116,8 +117,7 @@ namespace AndWeHaveAPlan.Mimic
 
             // first param "mockMethodName"
             ilGenerator.Emit(OpCodes.Ldstr, methodName);
-            
-            
+
             ilGenerator.Emit(OpCodes.Ldc_I4, methodParamsTypes.Length);
             ilGenerator.Emit(OpCodes.Newarr, typeof(object));
 
@@ -126,6 +126,8 @@ namespace AndWeHaveAPlan.Mimic
                 ilGenerator.Emit(OpCodes.Dup);
                 ilGenerator.Emit(OpCodes.Ldc_I4, i);
                 ilGenerator.Emit(OpCodes.Ldarg, i + 1);
+                if(methodParamsTypes[i].IsValueType)
+                    ilGenerator.Emit(OpCodes.Box, methodParamsTypes[i]);
                 ilGenerator.Emit(OpCodes.Stelem_Ref);
             }
 
