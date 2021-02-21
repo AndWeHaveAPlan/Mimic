@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndWeHaveAPlan.Mimic", "And
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndWeHaveAPlan.Mimic.Playground", "AndWeHaveAPlan.Mimic.Playground\AndWeHaveAPlan.Mimic.Playground.csproj", "{6BD56ABC-21B1-4C8D-8EB9-91C2FD2E89A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndWeHaveAPlan.Mimic.AspPlayground", "AndWeHaveAPlan.Mimic.AspPlayground\AndWeHaveAPlan.Mimic.AspPlayground.csproj", "{1ECF0483-E69A-4B70-BF0B-4961718007AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndWeHaveAPlan.Mimic.AspExample", "AndWeHaveAPlan.Mimic.AspExample\AndWeHaveAPlan.Mimic.AspExample.csproj", "{1ECF0483-E69A-4B70-BF0B-4961718007AE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndWeHaveAPlan.Mimic.AspExtensions", "AndWeHaveAPlan.Mimic.AspExtensions\AndWeHaveAPlan.Mimic.AspExtensions.csproj", "{DFD078FA-63DF-4CFF-B10D-754030ED0050}"
 EndProject
