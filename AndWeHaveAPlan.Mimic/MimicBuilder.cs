@@ -106,6 +106,8 @@ namespace AndWeHaveAPlan.Mimic
                 methodParamsTypes
             );
 
+            var parameterConstructorInfo = typeof(MockParameter).GetConstructors()[0];
+
             string methodName = interfaceMethodInfo.Name;
 
             var ilGenerator = methodBuilder.GetILGenerator();
@@ -119,15 +121,24 @@ namespace AndWeHaveAPlan.Mimic
             ilGenerator.Emit(OpCodes.Ldstr, methodName);
 
             ilGenerator.Emit(OpCodes.Ldc_I4, methodParamsTypes.Length);
-            ilGenerator.Emit(OpCodes.Newarr, typeof(object));
+            ilGenerator.Emit(OpCodes.Newarr, typeof(MockParameter));
 
             for (int i = 0; i < methodParamsTypes.Length; i++)
             {
-                ilGenerator.Emit(OpCodes.Dup);
-                ilGenerator.Emit(OpCodes.Ldc_I4, i);
+                ilGenerator.Emit(OpCodes.Dup); // dup array address
+                ilGenerator.Emit(OpCodes.Ldc_I4, i); //load index
+
+                ilGenerator.Emit(OpCodes.Ldstr, methodName);
+                ilGenerator.Emit(OpCodes.Ldtoken, methodParamsTypes[i]);
+                ilGenerator.Emit(OpCodes.Call, typeof(Type).GetMethod("GetTypeFromHandle", new
+                    Type[] {typeof(RuntimeTypeHandle)}));
                 ilGenerator.Emit(OpCodes.Ldarg, i + 1);
-                if(methodParamsTypes[i].IsValueType)
+                if (methodParamsTypes[i].IsValueType)
                     ilGenerator.Emit(OpCodes.Box, methodParamsTypes[i]);
+
+                ilGenerator.Emit(OpCodes.Newobj, parameterConstructorInfo);
+
+
                 ilGenerator.Emit(OpCodes.Stelem_Ref);
             }
 
@@ -139,7 +150,7 @@ namespace AndWeHaveAPlan.Mimic
                     return _protocolImplementation.MakeRequest<object>(methodName, params[])   (Task<object>)
                  */
                 ilGenerator.EmitCall(OpCodes.Callvirt, mockMethodInfo.MakeGenericMethod(typeof(object)),
-                    new[] {typeof(string), typeof(object[])}); // (string address, object[] args)
+                    new[] {typeof(string), typeof(MockParameter[])}); // (string address, object[] args)
 
                 ilGenerator.Emit(OpCodes.Ret);
             }
@@ -151,7 +162,7 @@ namespace AndWeHaveAPlan.Mimic
                  */
                 var retType = interfaceMethodInfo.ReturnType.GenericTypeArguments.First();
                 ilGenerator.EmitCall(OpCodes.Callvirt, mockMethodInfo.MakeGenericMethod(retType),
-                    new[] {typeof(string), typeof(object[])}); // (string address, object[] args)
+                    new[] {typeof(string), typeof(MockParameter[])}); // (string address, object[] args)
 
                 ilGenerator.Emit(OpCodes.Ret);
             }
@@ -163,7 +174,7 @@ namespace AndWeHaveAPlan.Mimic
                  */
                 ilGenerator.EmitCall(OpCodes.Callvirt,
                     mockMethodInfo.MakeGenericMethod(interfaceMethodInfo.ReturnType),
-                    new[] {typeof(string), typeof(object[])});
+                    new[] {typeof(string), typeof(MockParameter[])});
                 ilGenerator.Emit(OpCodes.Call, typeof(Task<object>).GetProperty("Result").GetMethod);
 
                 ilGenerator.Emit(OpCodes.Ret);

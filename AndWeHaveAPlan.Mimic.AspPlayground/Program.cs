@@ -13,9 +13,11 @@ namespace AndWeHaveAPlan.Mimic.AspPlayground
     {
         public static void Main(string[] args)
         {
-            HttpRealWorker w = new HttpRealWorker();
-
-            var t=w.Mock<Task>("").Result;
+            var t = typeof(int);
+            var o = 5;
+            var s = ";";
+            
+            new MockParameter("", typeof(int), 5);
             
             CreateHostBuilder(args).Build().Run();
         }

@@ -24,7 +24,7 @@ namespace AndWeHaveAPlan.Mimic.Playground
     // реализация "протокола" (тут может быть всякое, например httpClient.Post(...)
     public class RealWorker : IMimicWorker
     {
-        public async Task<T> Mock<T>(string mockMethodName, params object[] args)
+        public async Task<T> Mock<T>(string mockMethodName, MockParameter[] args)
         {
             Console.WriteLine("Common worker: " + mockMethodName);
 
