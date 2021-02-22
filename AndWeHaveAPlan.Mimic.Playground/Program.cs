@@ -7,21 +7,17 @@ namespace AndWeHaveAPlan.Mimic.Playground
     {
         static void Main(string[] args)
         {
-            /* var something=Mimic.Create<IClient, RealWorker>();
- 
-             something.Foo("address11","efea fdf","324 r33343242");
-             
-             Console.WriteLine("Hello World!");*/
+            var mimic = new Mimic<IClient, RealWorker>();
+            var instance = mimic.NewInstance(new RealWorker());
+            instance.Foo("pickle-pee", "pump-a-rum", 42);
         }
     }
 
-
     public interface IClient
     {
-        Task Foo(string input, string i2, string i3);
+        Task Foo(string s, object o, int t);
     }
 
-    // реализация "протокола" (тут может быть всякое, например httpClient.Post(...)
     public class RealWorker : IMimicWorker
     {
         public async Task<T> Mock<T>(string mockMethodName, MockParameter[] args)
