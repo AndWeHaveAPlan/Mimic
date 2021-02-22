@@ -8,23 +8,22 @@ namespace AndWeHaveAPlan.Mimic.AspExample.Services
     /// </summary>
     public class UsefulStuffService : IUsefulStuff
     {
-        private static Dictionary<string, string> _values = new Dictionary<string, string>();
+        private static Dictionary<string, string> _values = new();
 
-        public Task<string> GetSomeValue(string key)
+        public async Task<string> GetSomeValue(string key)
         {
             // Some calculations, DB access, etc
-            return Task.FromResult(_values[key]);
+            var ret = _values.ContainsKey(key) ? _values[key] : null;
+            return ret;
         }
 
-        public Task SetSomeValue(string key, string value)
+        public async Task SetSomeValue(string key, string value)
         {
             // Some calculations, DB access, etc
             if (_values.ContainsKey(key))
                 _values[key] = value;
             else
                 _values.Add(key, value);
-
-            return Task.CompletedTask;
         }
     }
 }

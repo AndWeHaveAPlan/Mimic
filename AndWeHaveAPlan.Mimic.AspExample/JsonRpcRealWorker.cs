@@ -44,13 +44,10 @@ namespace AndWeHaveAPlan.Mimic.AspExample
                 new StringContent(jsonRequestString, Encoding.UTF8, "application/json"));
 
             var responseString = await responseMessage.Content.ReadAsStringAsync();
-
             if (string.IsNullOrWhiteSpace(responseString))
                 return default;
-
             var response = JsonSerializer.Deserialize<JsonRpcResponse<T>>(responseString,
                 new JsonSerializerOptions {PropertyNameCaseInsensitive = true});
-
             return response.Result;
         }
     }
