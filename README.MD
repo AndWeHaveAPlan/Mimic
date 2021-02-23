@@ -2,6 +2,8 @@
 Mimic creates type at runtime that implements target interface 
 and handle all interface methods call with custom class
 
+**WARNING! this is more a proof-of-concept rather then ready-to-use code**
+
 ### Usage
 To mock an interface
 ```c#
@@ -15,7 +17,7 @@ create handler class
 ```c#
     public class RealWorker : IMimicWorker
     {
-        public async Task<T> Mock<T>(string mockMethodName, MockParameter[] args)
+        public async Task<T> DoWork<T>(string mockMethodName, MockParameter[] args)
         {
             ...
         }
@@ -43,7 +45,7 @@ generated type will be similar to
 
         public Task<int> Foo(string s, object o, int i)
         {
-            return _worker.Mock<int>(
+            return _worker.DoWork<int>(
                 "Foo",
                 new MockParameter[]
                 {
@@ -56,7 +58,7 @@ generated type will be similar to
 
         public string Bar(string s)
         {
-            return _worker.Mock<string>(
+            return _worker.DoWork<string>(
                 "Bar",
                 new MockParameter[]
                 {
@@ -142,7 +144,7 @@ We can "publish" it as jsonRPC (example use [EdjCase.JsonRpc.Router](https://git
     {
         ...
 
-        public async Task<T> Mock<T>(string mockMethodName, MockParameter[] args)
+        public async Task<T> DoWork<T>(string mockMethodName, MockParameter[] args)
         {
             var requestModel = new List<object>();
 
