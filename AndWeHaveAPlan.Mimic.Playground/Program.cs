@@ -15,12 +15,12 @@ namespace AndWeHaveAPlan.Mimic.Playground
 
     public interface IClient
     {
-        Task Foo(string s, object o, int t);
+        Task<int> Foo(string s, object o, int t);
     }
 
     public class RealWorker : IMimicWorker
     {
-        public async Task<T> Mock<T>(string mockMethodName, MockParameter[] args)
+        public async Task<T> DoWork<T>(string mockMethodName, MockParameter[] args)
         {
             Console.WriteLine("Common worker: " + mockMethodName);
 
@@ -30,6 +30,40 @@ namespace AndWeHaveAPlan.Mimic.Playground
             }
 
             return default;
+        }
+    }
+    
+    public class IClientMimic : IClient
+    {
+        private readonly RealWorker _worker;
+
+        public IClientMimic(RealWorker worker)
+        {
+            _worker = worker;
+        }
+
+        public Task<int> Foo(string s, object o, int i)
+        {
+            return _worker.DoWork<int>(
+                "Foo",
+                new MockParameter[]
+                {
+                    new MockParameter("s", typeof(string), s),
+                    new MockParameter("o", typeof(object), o),
+                    new MockParameter("i", typeof(int), i)
+                }
+            );
+        }
+
+        public string Bar(string s)
+        {
+            return _worker.DoWork<string>(
+                "Bar",
+                new MockParameter[]
+                {
+                    new MockParameter("s", typeof(string), s)
+                }
+            ).Result;
         }
     }
 }

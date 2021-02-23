@@ -4,7 +4,7 @@ namespace AndWeHaveAPlan.Mimic.Tests
 {
     public class MockImpl : IMimicWorker
     {
-        public async Task<TRet> Mock<TRet>(string mockMethodName, MockParameter[] args)
+        public async Task<TRet> DoWork<TRet>(string mockMethodName, MockParameter[] args)
         {
             string input = "";
             input += args[1].Value.ToString();

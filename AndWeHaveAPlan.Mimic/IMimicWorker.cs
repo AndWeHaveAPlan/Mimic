@@ -4,6 +4,6 @@ namespace AndWeHaveAPlan.Mimic
 {
     public interface IMimicWorker
     {
-        Task<TRet> Mock<TRet>(string mockMethodName, MockParameter[] args);
+        Task<TRet> DoWork<TRet>(string mockMethodName, MockParameter[] args);
     }
 }

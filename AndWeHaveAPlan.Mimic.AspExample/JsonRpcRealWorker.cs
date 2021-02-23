@@ -21,7 +21,7 @@ namespace AndWeHaveAPlan.Mimic.AspExample
             _client = client;
         }
 
-        public async Task<T> Mock<T>(string mockMethodName, MockParameter[] args)
+        public async Task<T> DoWork<T>(string mockMethodName, MockParameter[] args)
         {
             var requestModel = new List<object>();
 
