@@ -33,6 +33,9 @@ namespace AndWeHaveAPlan.Mimic.Playground
         }
     }
     
+    /// <summary>
+    /// Desired type to view generated IL
+    /// </summary>
     public class IClientMimic : IClient
     {
         private readonly RealWorker _worker;
