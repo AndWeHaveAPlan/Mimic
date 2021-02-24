@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Xunit;
 
 namespace AndWeHaveAPlan.Mimic.Tests
@@ -22,7 +23,8 @@ namespace AndWeHaveAPlan.Mimic.Tests
             foreach (var methodInfo in typeof(ITestInterface).GetMethods())
             {
                 // TODO: check also params types
-                Assert.NotNull(tiMimic.GetType().GetMethod(methodInfo.Name));
+                var parmeters = methodInfo.GetParameters().Select(p => p.ParameterType).ToArray();
+                Assert.NotNull(tiMimic.GetType().GetMethod(methodInfo.Name, parmeters));
             }
         }
     }

@@ -57,7 +57,7 @@ namespace AndWeHaveAPlan.Mimic
                 }       
             */
             var ctorBuilder = tb.DefineConstructor(MethodAttributes.Public,
-                CallingConventions.HasThis | CallingConventions.Standard, new[] {typeof(TMimicWorker)});
+                CallingConventions.HasThis | CallingConventions.Standard, new[] { typeof(TMimicWorker) });
             BuildConstructor(ctorBuilder.GetILGenerator(), fieldBuilder);
 
             /*
@@ -74,7 +74,9 @@ namespace AndWeHaveAPlan.Mimic
                 var implementationMethodBuilder =
                     BuildImplementationMethod(interfaceMethodInfo, tb, fieldBuilder, makeRequestMethodInfo);
 
-                MethodInfo newMethod = typeof(TInterface).GetMethod(interfaceMethodInfo.Name);
+
+
+                MethodInfo newMethod = typeof(TInterface).GetMethod(interfaceMethodInfo.Name, interfaceMethodInfo.GetParameters().Select(p => p.ParameterType).ToArray());
                 tb.DefineMethodOverride(implementationMethodBuilder, newMethod);
             }
 
@@ -169,7 +171,7 @@ namespace AndWeHaveAPlan.Mimic
                     return _protocolImplementation.DoWork<object>(methodName, params[])   (Task<object>)
                  */
                 ilGenerator.EmitCall(OpCodes.Callvirt, mockMethodInfo.MakeGenericMethod(typeof(object)),
-                    new[] {typeof(string), typeof(MockParameter[])}); // null
+                    new[] { typeof(string), typeof(MockParameter[]) }); // null
 
                 ilGenerator.Emit(OpCodes.Ret);
             }
@@ -181,7 +183,7 @@ namespace AndWeHaveAPlan.Mimic
                  */
                 var retType = interfaceMethodInfo.ReturnType.GenericTypeArguments.First();
                 ilGenerator.EmitCall(OpCodes.Callvirt, mockMethodInfo.MakeGenericMethod(retType),
-                    new[] {typeof(string), typeof(MockParameter[])}); // Task<T>
+                    new[] { typeof(string), typeof(MockParameter[]) }); // Task<T>
 
                 ilGenerator.Emit(OpCodes.Ret);
             }
@@ -193,7 +195,7 @@ namespace AndWeHaveAPlan.Mimic
                  */
                 ilGenerator.EmitCall(OpCodes.Callvirt,
                     mockMethodInfo.MakeGenericMethod(interfaceMethodInfo.ReturnType),
-                    new[] {typeof(string), typeof(MockParameter[])}); // this, Task<T>
+                    new[] { typeof(string), typeof(MockParameter[]) }); // this, Task<T>
                 ilGenerator.Emit(OpCodes.Call, typeof(Task<object>).GetProperty("Result").GetMethod); // T
 
                 ilGenerator.Emit(OpCodes.Ret);
