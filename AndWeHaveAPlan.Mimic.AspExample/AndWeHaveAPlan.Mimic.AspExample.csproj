@@ -11,6 +11,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\AndWeHaveAPlan.Mimic.AspExtensions\AndWeHaveAPlan.Mimic.AspExtensions.csproj" />
+      <ProjectReference Include="..\AndWeHaveAPlan.Mimic.JsonRpc\AndWeHaveAPlan.Mimic.JsonRpc.csproj" />
       <ProjectReference Include="..\AndWeHaveAPlan.Mimic\AndWeHaveAPlan.Mimic.csproj" />
     </ItemGroup>
 

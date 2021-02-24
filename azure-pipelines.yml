@@ -41,6 +41,7 @@ steps:
     projects: |
       AndWeHaveAPlan.Mimic.AspExtensions/*.csproj
       AndWeHaveAPlan.Mimic/*.csproj
+      AndWeHaveAPlan.Mimic.JsonRpc/*.csproj
     custom: 'pack'
     arguments: '-c Release --no-build --no-restore -o ./pkg'
 
@@ -52,6 +53,7 @@ steps:
     projects: |
       AndWeHaveAPlan.Mimic.AspExtensions/*.csproj
       AndWeHaveAPlan.Mimic/*.csproj
+      AndWeHaveAPlan.Mimic.JsonRpc/*.csproj
     custom: 'pack'
     arguments: '-c Release --no-build --no-restore -o ./pkg --version-suffix dev'
 

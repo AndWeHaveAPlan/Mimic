@@ -1,6 +1,7 @@
 using System;
 using AndWeHaveAPlan.Mimic.AspExample.JsonRpcControllers;
 using AndWeHaveAPlan.Mimic.AspExtensions;
+using AndWeHaveAPlan.Mimic.JsonRpc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -30,11 +31,11 @@ namespace AndWeHaveAPlan.Mimic.AspExample
 
             // UsefulStuff migrated to separate service (UsefulStuffController in this example)
             // now we can mimic this interface and pass all IUsefulStuff calls over http
-            services.AddHttpClient<JsonRpcRealWorker>(client =>
+            services.AddHttpClient<JsonRpcMimicWorker>(client =>
             {
-                client.BaseAddress = new Uri("http://localhost:3000");
+                client.BaseAddress = new Uri("http://localhost:3000/api/v4/useful-jsonrpc");
             });
-            services.AddScopedMimic<IUsefulStuff, JsonRpcRealWorker>();
+            services.AddScopedMimic<IUsefulStuff, JsonRpcMimicWorker>();
 
             
             services.AddControllers();

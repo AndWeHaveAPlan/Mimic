@@ -1,22 +1,18 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <VersionPrefix>0.0.3</VersionPrefix>
     <Description>Sort of mock library</Description>
-    <PackageId>AndWeHaveAPlan.Mimic.AspExtensions</PackageId>
-    <AssemblyName>AndWeHaveAPlan.Mimic.AspExtensions</AssemblyName>
-    <RootNamespace>AAndWeHaveAPlan.Mimic.AspExtensions</RootNamespace>
+    <PackageId>AndWeHaveAPlan.Mimic.JsonRpc</PackageId>
+    <AssemblyName>AndWeHaveAPlan.Mimic.JsonRpc</AssemblyName>
+    <RootNamespace>AndWeHaveAPlan.Mimic.JsonRpc</RootNamespace>
     <Authors>Eugen Snitko</Authors>
     <Company />
     <RepositoryUrl>https://github.com/AndWeHaveAPlan/Mimic</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\AndWeHaveAPlan.Mimic\AndWeHaveAPlan.Mimic.csproj" />

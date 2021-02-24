@@ -1,23 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 
-namespace AndWeHaveAPlan.Mimic.AspExample
+namespace AndWeHaveAPlan.Mimic.JsonRpc
 {
-    /// <summary>
-    /// Example mocking with http request
-    /// </summary>
-    public class JsonRpcRealWorker : IMimicWorker
+    public class JsonRpcMimicWorker : IMimicWorker
     {
-        private readonly ILogger<JsonRpcRealWorker> _logger;
         private readonly HttpClient _client;
 
-        public JsonRpcRealWorker(ILogger<JsonRpcRealWorker> logger, HttpClient client)
+
+        public JsonRpcMimicWorker(HttpClient client)
         {
-            _logger = logger;
             _client = client;
         }
 
@@ -30,30 +26,23 @@ namespace AndWeHaveAPlan.Mimic.AspExample
                 requestModel.Add(mockParameter.Value);
             }
 
-            var jsonRpcRequest = new
+            var jsonRpcRequest = new JsonRpcRequest
             {
-                id = 1,
-                jsonrpc = "2.0",
-                method = mockMethodName,
-                @params = requestModel
+                Method = mockMethodName,
+                Params = requestModel
             };
 
             var jsonRequestString = JsonSerializer.Serialize(jsonRpcRequest);
 
-            var responseMessage = await _client.PostAsync($"api/v4/useful-jsonrpc",
+            var responseMessage = await _client.PostAsync($"",
                 new StringContent(jsonRequestString, Encoding.UTF8, "application/json"));
 
             var responseString = await responseMessage.Content.ReadAsStringAsync();
             if (string.IsNullOrWhiteSpace(responseString))
                 return default;
             var response = JsonSerializer.Deserialize<JsonRpcResponse<T>>(responseString,
-                new JsonSerializerOptions {PropertyNameCaseInsensitive = true});
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             return response.Result;
         }
-    }
-
-    public class JsonRpcResponse<T>
-    {
-        public T Result { get; set; }
     }
 }
