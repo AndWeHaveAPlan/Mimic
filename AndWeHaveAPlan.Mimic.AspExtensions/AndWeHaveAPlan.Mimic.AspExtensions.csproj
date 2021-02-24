@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.1</TargetFramework>
         <RootNamespace>AndWeHaveAPlan.Mimic.AspExtensions</RootNamespace>
 
       <TargetFramework>netcoreapp2.1</TargetFramework>
-      <Version>0.0.1</Version>
+      <VersionPrefix>0.0.2</VersionPrefix>
       <Description>Sort of mock library</Description>
       <PackageId>AndWeHaveAPlan.Mimic.AspExtensions</PackageId>
       <AssemblyName>AndWeHaveAPlan.Mimic.AspExtensions</AssemblyName>
