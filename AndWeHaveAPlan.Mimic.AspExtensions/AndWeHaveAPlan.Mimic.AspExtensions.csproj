@@ -3,6 +3,19 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp2.1</TargetFramework>
         <RootNamespace>AndWeHaveAPlan.Mimic.AspExtensions</RootNamespace>
+
+      <TargetFramework>netcoreapp2.1</TargetFramework>
+      <Version>0.0.1</Version>
+      <Description>Sort of mock library</Description>
+      <PackageId>AndWeHaveAPlan.Mimic.AspExtensions</PackageId>
+      <AssemblyName>AndWeHaveAPlan.Mimic.AspExtensions</AssemblyName>
+      <RootNamespace>AAndWeHaveAPlan.Mimic.AspExtensions</RootNamespace>
+      <Authors>Eugen Snitko</Authors>
+      <Company />
+      <RepositoryUrl>https://github.com/AndWeHaveAPlan/Mimic</RepositoryUrl>
+      <RepositoryType>github</RepositoryType>
+      <PackageLicenseExpression>mit</PackageLicenseExpression>
+      <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>

@@ -2,6 +2,17 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.1</TargetFramework>
+        <Version>0.0.1</Version>
+        <Description>Sort of mock library</Description>
+        <PackageId>AndWeHaveAPlan.Mimic</PackageId>
+        <AssemblyName>AndWeHaveAPlan.Mimic</AssemblyName>
+        <RootNamespace>AndWeHaveAPlan.Mimic</RootNamespace>
+        <Authors>Eugen Snitko</Authors>
+        <Company />
+        <RepositoryUrl>https://github.com/AndWeHaveAPlan/Mimic</RepositoryUrl>
+        <RepositoryType>github</RepositoryType>
+        <PackageLicenseExpression>mit</PackageLicenseExpression>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
 </Project>

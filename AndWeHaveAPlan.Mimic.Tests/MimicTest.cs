@@ -14,7 +14,7 @@ namespace AndWeHaveAPlan.Mimic.Tests
             var sc = new SimpleClass();
             var inVal = tiMimic.ValInt(sc, "", 42);
 
-            Assert.Equal(inVal, 42);
+            Assert.Equal(42, inVal);
         }
 
         [Fact]

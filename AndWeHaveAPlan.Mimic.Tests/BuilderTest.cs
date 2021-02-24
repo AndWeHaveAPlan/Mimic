@@ -10,14 +10,14 @@ namespace AndWeHaveAPlan.Mimic.Tests
         {
             var type = MimicBuilder.Create<ITestInterface, MockImpl>();
             Assert.NotNull(type);
-            Assert.Equal(type.Name, "ITestInterfaceMimic");
+            Assert.Equal("ITestInterfaceMimic", type.Name);
         }
 
         [Fact]
         public void MimicConstructed()
         {
             var type = MimicBuilder.Create<ITestInterface, MockImpl>();
-            var tiMimic = (ITestInterface) Activator.CreateInstance(type, new MockImpl());
+            var tiMimic = (ITestInterface)Activator.CreateInstance(type, new MockImpl());
 
             foreach (var methodInfo in typeof(ITestInterface).GetMethods())
             {
