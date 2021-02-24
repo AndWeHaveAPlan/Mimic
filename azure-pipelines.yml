@@ -1,0 +1,60 @@
+# ASP.NET Core (.NET Framework)
+# Build and test ASP.NET Core projects targeting the full .NET Framework.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- release
+- dev
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/release')]
+  isDev: $[eq(variables['Build.SourceBranch'], 'refs/heads/dev')]
+
+steps:
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet restore'
+  inputs:
+    command: 'restore'
+    feedsToUse: 'select'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet build'
+  inputs:
+    command: 'custom'
+    projects: '**/*.csproj'
+    custom: 'build'
+    arguments: '-c Release --no-restore'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet pack release'
+  condition:  and(succeeded(), eq(variables.isMain, true))
+  inputs:
+    command: 'custom'
+    projects: '**/*.csproj'
+    custom: 'pack'
+    arguments: '-c Release --no-build --no-restore -o ./pkg'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet pack dev'
+  condition:  and(succeeded(), eq(variables.isDev, true))
+  inputs:
+    command: 'custom'
+    projects: 'AndWeHaveAPlan.Mimic.AspExtensions/*.csproj,AndWeHaveAPlan.Mimic/*.csproj'
+    custom: 'pack'
+    arguments: '-c Release --no-build --no-restore -o ./pkg --version-suffix dev'
+
+- task: NuGetCommand@2
+  displayName: 'nuget push'
+  inputs:
+    command: 'push'
+    packagesToPush: 'pkg/*.nupkg'
+    nuGetFeedType: 'external'
+    publishFeedCredentials: 'nuget.org'
