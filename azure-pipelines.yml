@@ -38,7 +38,9 @@ steps:
   condition:  and(succeeded(), eq(variables.isMain, true))
   inputs:
     command: 'custom'
-    projects: '**/*.csproj'
+    projects: |
+      AndWeHaveAPlan.Mimic.AspExtensions/*.csproj
+      AndWeHaveAPlan.Mimic/*.csproj
     custom: 'pack'
     arguments: '-c Release --no-build --no-restore -o ./pkg'
 
@@ -47,7 +49,9 @@ steps:
   condition:  and(succeeded(), eq(variables.isDev, true))
   inputs:
     command: 'custom'
-    projects: 'AndWeHaveAPlan.Mimic.AspExtensions/*.csproj,AndWeHaveAPlan.Mimic/*.csproj'
+    projects: |
+      AndWeHaveAPlan.Mimic.AspExtensions/*.csproj
+      AndWeHaveAPlan.Mimic/*.csproj
     custom: 'pack'
     arguments: '-c Release --no-build --no-restore -o ./pkg --version-suffix dev'
 
