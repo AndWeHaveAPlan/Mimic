@@ -33,7 +33,7 @@ namespace AndWeHaveAPlan.Mimic.JsonRpc
                 Params = requestModel
             };
 
-            var jsonRequestString = JsonSerializer.Serialize(jsonRpcRequest);
+            var jsonRequestString = JsonSerializer.Serialize(jsonRpcRequest, _jsonSerializerOptions);
 
             var responseMessage = await _client.PostAsync($"",
                 new StringContent(jsonRequestString, Encoding.UTF8, "application/json"));
