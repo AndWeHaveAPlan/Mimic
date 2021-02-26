@@ -10,11 +10,12 @@ namespace AndWeHaveAPlan.Mimic.JsonRpc
     public class JsonRpcMimicWorker : IMimicWorker
     {
         private readonly HttpClient _client;
+        private readonly JsonSerializerOptions _jsonSerializerOptions;
 
-
-        public JsonRpcMimicWorker(HttpClient client)
+        public JsonRpcMimicWorker(HttpClient client, JsonSerializerOptions jsonSerializerOptions=null)
         {
             _client = client;
+            _jsonSerializerOptions = jsonSerializerOptions;
         }
 
         public async Task<T> DoWork<T>(string mockMethodName, MockParameter[] args)
@@ -40,8 +41,7 @@ namespace AndWeHaveAPlan.Mimic.JsonRpc
             var responseString = await responseMessage.Content.ReadAsStringAsync();
             if (string.IsNullOrWhiteSpace(responseString))
                 return default;
-            var response = JsonSerializer.Deserialize<JsonRpcResponse<T>>(responseString,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            var response = JsonSerializer.Deserialize<JsonRpcResponse<T>>(responseString, _jsonSerializerOptions);
             return response.Result;
         }
     }

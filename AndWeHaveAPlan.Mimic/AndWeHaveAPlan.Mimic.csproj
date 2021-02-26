@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <VersionPrefix>0.0.3</VersionPrefix>
+    <VersionPrefix>0.0.4</VersionPrefix>
     <Description>Sort of mock library</Description>
     <PackageId>AndWeHaveAPlan.Mimic</PackageId>
     <AssemblyName>AndWeHaveAPlan.Mimic</AssemblyName>
